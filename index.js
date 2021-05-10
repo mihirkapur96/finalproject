@@ -104,7 +104,7 @@ app.get("/customer", async (req, res) => {
 // GET /edit/5
 app.get("/edit/:id", (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM customer WHERE cusId = $1";
+    const sql = "SELECT * FROM CUSTOMER WHERE cusId = $1";
     pool.query(sql, [id], (err, result) => {
       // if (err) ...
       res.render("edit", { model: result.rows[0] });
@@ -115,7 +115,7 @@ app.get("/edit/:id", (req, res) => {
 app.post("/edit/:id", (req, res) => {
     const id = req.params.id;
     const customer = [req.body.cusId, req.body.cusFname, req.body.cusLname,req.body.cusState,req.body.cusSalesYTD,req.body.cusSalesPrev];
-    const sql = "UPDATE customer SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
+    const sql = "UPDATE CUSTOMER SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
     pool.query(sql, customer, (err, result) => {
       // if (err) ...
       res.redirect("/customer");
@@ -125,7 +125,7 @@ app.post("/edit/:id", (req, res) => {
   // GET /delete/5
 app.get("/delete/:id", (req, res) => {
     const id = req.params.id;
-    const sql = "SELECT * FROM customer WHERE cusId = $1";
+    const sql = "SELECT * FROM CUSTOMER WHERE cusId = $1";
     pool.query(sql, [id], (err, result) => {
       // if (err) ...
       res.render("delete", { model: result.rows[0] });
@@ -136,29 +136,44 @@ app.get("/delete/:id", (req, res) => {
 app.post("/delete/:id", (req, res) => {
     const id = req.params.id;
     const customer = [req.body.cusId, req.body.cusFname, req.body.cusLname,req.body.cusState,req.body.cusSalesYTD,req.body.cusSalesPrev];
-    const sql = "UPDATE customer SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
+    const sql = "UPDATE CUSTOMER SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
     pool.query(sql, customer, (err, result) => {
       // if (err) ...
       res.redirect("/customer");
     });
   });
 
-// GET /delete/5
-app.get("/Create Customer/:id", (req, res) => {
-  const id = req.params.id;
-  const sql = "SELECT * FROM customer WHERE cusId = $1";
-  pool.query(sql, [id], (err, result) => {
-    // if (err) ...
-    res.render("Create Customer", { model: result.rows[0] });
-  });
+// // GET /create/5
+// app.get("/create/:id", (req, res) => {
+//   const id = req.params.id;
+//   const sql = "SELECT * FROM CUSTOMER WHERE cusId = $1";
+//   pool.query(sql, [id], (err, result) => {
+//     // if (err) ...
+//     res.render("create", { model: result.rows[0] });
+//   });
+// });
+
+// // POST /create/5
+// app.post("/create/:id", (req, res) => {
+//   const id = req.params.id;
+//   const customer = [req.body.cusId, req.body.cusFname, req.body.cusLname,req.body.cusState,req.body.cusSalesYTD,req.body.cusSalesPrev];
+//   const sql = "UPDATE CUSTOMER SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
+//   pool.query(sql, customer, (err, result) => {
+//     // if (err) ...
+//     res.redirect("/customer");
+//   });
+// });
+
+app.get("/create", (req, res) => {
+  res.render("create");
 });
 
-// POST /delete/5
-app.post("/Create Customer/:id", (req, res) => {
-  const id = req.params.id;
-  const customer = [req.body.cusId, req.body.cusFname, req.body.cusLname,req.body.cusState,req.body.cusSalesYTD,req.body.cusSalesPrev];
-  const sql = "UPDATE customer SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
-  pool.query(sql, customer, (err, result) => {
+
+// POST /create
+app.post("/create", (req, res) => {
+  const sql = "INSERT INTO customer (cusid, cusfname, cuslname, cusstate, cussalesytd, cussalesprev) VALUES ($1, $2, $3, $4, $5, $6 )";
+  const book = [req.body.cusId, req.body.cusFname, req.body.cusLname, req.body.cusState, req.body.cusSalesYTD, req.body.cusSalesPrev];
+  pool.query(sql, book, (err, result) => {
     // if (err) ...
     res.redirect("/customer");
   });

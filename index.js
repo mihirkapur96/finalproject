@@ -143,27 +143,6 @@ app.post("/delete/:id", (req, res) => {
     });
   });
 
-// // GET /create/5
-// app.get("/create/:id", (req, res) => {
-//   const id = req.params.id;
-//   const sql = "SELECT * FROM CUSTOMER WHERE cusId = $1";
-//   pool.query(sql, [id], (err, result) => {
-//     // if (err) ...
-//     res.render("create", { model: result.rows[0] });
-//   });
-// });
-
-// // POST /create/5
-// app.post("/create/:id", (req, res) => {
-//   const id = req.params.id;
-//   const customer = [req.body.cusId, req.body.cusFname, req.body.cusLname,req.body.cusState,req.body.cusSalesYTD,req.body.cusSalesPrev];
-//   const sql = "UPDATE CUSTOMER SET ID = $1, FName = $2, LName = $3, State = $4, SalesYTD = $5, PrevYearSales = #6 WHERE (cusId = $1)";
-//   pool.query(sql, customer, (err, result) => {
-//     // if (err) ...
-//     res.redirect("/customer");
-//   });
-// });
-
 app.get("/create", (req, res) => {
   res.render("create");
 });

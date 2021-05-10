@@ -194,23 +194,23 @@ app.post("/import",  upload.single('Input1'), (req, res) => {
    res.send(message);
 });
 
-app.get("/output", (req, res) => {
+ app.get("/export", (req, res) => {
   var message = "";
-  res.render("output",{ message: message });
+  res.render("export",{ message: message });
  });
  
  
- app.post("/output", (req, res) => {
-     const sql = "SELECT * FROM customer ORDER BY cusId";
+ app.post("/export", (req, res) => {
+     const sql = "SELECT * FROM CUSTOMER ORDER BY CUSID";
      pool.query(sql, [], (err, result) => {
          var message = "";
          if(err) {
              message = `Error - ${err.message}`;
-             res.render("output", { message: message })
+             res.render("export", { message: message })
          } else {
              var output = "";
              result.rows.forEach(customer => {
-                 output += `${customer.cusid},${customer.cusfname},${customer.cuslname},${customer.cusstate}, ${customer.cussalesytd}, ${customer.cussalesprev}\r\n`;
+                 output += `${customer.cusid},${customer.cusfname},${customer.cuslname},${customer.cusstate},${customer.cussalesytd},${customer.cussalesprev}\r\n`;
              });
              res.header("Content-Type", "text/csv");
              res.attachment("export.csv");

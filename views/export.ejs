@@ -1,7 +1,7 @@
 <%- include("_header") -%>
 
 <h3>Customer Export</h3>
-<form action="/output" method="post">
+<form action="/export" method="post">
     <input type="submit" id="submit" value="Export Customers">
 </form>
 <% if(message.substring(0,5) === "Error") { %>
@@ -9,3 +9,5 @@
     <p><%= message %></p>
 <% } %>
 <%- include("_footer") -%>
+
+<%- include("_header") -%>
